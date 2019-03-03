@@ -1,0 +1,109 @@
+---
+layout: post
+title:  "Roman Numerals - DOJO"
+date:   2014-03-22 11:00:00 +0000
+categories: roman clojure
+---
+<section>
+<h1>Roman Numerals</h1>
+<p>
+All code dojos start with roman numerals, it's the default - it's not exciting, but it serves a purpose - <b>get your own idea onto the board</b>. As such, I've only ever done the roman numerals dojo once, at a work scala dojo while I was attempting to debug some R, it wasn't a great experience as I didn't really get to participate.
+</p>
+
+<p>
+Today I was woken up at about 6:30 by an annoying cat and, unable to get back to sleep, figured I would do something constructive - have a quick stab at doing the roman numeral thing.
+<br>
+<br>
+So, my hack looks like this:
+</p>
+
+<script src="https://gist.github.com/biomunky/9715453.js"></script>
+
+<p>
+This will take us from "MCMLXXXIV" to 1984 - great. I recall in the scala dojo that some people took the option of reversing the sequence then mapping a function over the reverse, this saves the use of an accumulator - for some reason I don't like doing the reverse then a map … it's not like this is a chunk of code where performance is critical but ...
+<br>
+<br>
+Here's an example of the kind of other solutions I've seen using reverse, they all use a helper like roman-helper, in the following case 'add-numeral'
+</p>
+
+{% highlight clojure %}
+(defn roman [s]
+    (reduce add-numeral (map numerals (reverse s))))
+{% endhighlight %}
+
+<p>
+Talking to a friend at work, he came up with a slightly different version that removed the recur call - something I like to do. This allowed me to create another solution that I think is nicer - the complete gist can be found <a href="https://gist.github.com/biomunky/9715453">here on github</a>.
+<br>
+<br>
+<strong>The updated solution follows:</strong>
+</p>
+
+{% highlight clojure %}
+(defn roman-helper [[a b]]
+    (let [curnt (roman-lookup a 0) nxt (roman-lookup b 0)]
+        (if (> nxt curnt) (- curnt) curnt)))
+
+(defn roman->decimal [roman]
+    (let [as-seq (conj (into [] roman) nil)
+        pairs (partition 2 1 as-seq)]
+        (apply + (map roman-helper pairs))))
+{% endhighlight %}
+
+<p>
+There are a couple of changes here. The first is a small change to the roman-helper function, the aggregate has been removed so the function simply returns it's value or negative if the current letter is worth less than the next. The roman->decimal function has changed a little bit more, with most of the action happening in the let binding.
+<br>
+<br>
+<strong>The first step</strong>
+</p>
+
+{% highlight clojure %}
+(conj (into [] roman) nil)
+{% endhighlight %}
+
+<p>turns the string into a vector of characters and then slaps a nil on the end. I am not as bothered by this as the reverse because conj takes <a href="http://www.infoq.com/articles/in-depth-look-clojure-collections">essentially constant time</a> - not that this matters at all in this bit of code golf.
+<br>
+<br>
+<strong>into vs (vec "XXX")</strong>
+<br>
+<br>
+when dealing with big collections, the use of (into [] "xxx") is about 30% more performant than vec, this is due to the use of transients. Since we aren't using a big collection here I could've written the block as
+</p>
+{% highlight clojure %}
+(conj (vec roman) nil)
+{% endhighlight %}
+
+<p>
+but I don't think it adds much to the clarity of the code.
+<br>
+<br>
+<strong>The second step</strong>
+</p>
+{% highlight clojure %}
+(partition 2 1 as-seq)
+{% endhighlight %}
+
+<p>we use the vector we created in step 1 to create a sequence of overlapping pairs. The 2 indicates the number of elements per partition and the 1 the number of steps we take. Clojure will take all partitions until we exhaust the sequence - without the nil we wouldn't get the last pair.
+<br>
+<br>
+<strong>The final step</strong>
+</p>
+
+{% highlight clojure %}
+(apply + (map roman-helper pairs))
+{% endhighlight %}
+
+<p>Convert to numbers and add 'em up.
+<br>
+<br>
+<strong>Going in the reverse direction.</strong>
+<br>
+<br>
+I cheated. Clojure has pprint, which has a format function that allows us to create a partial function. The partial function can be called with a number e.g.
+(decimal->roman 1984) and produce "MCMLXXXIV".
+</p>
+
+{% highlight clojure %}
+(def decimal->roman (partial clojure.pprint/cl-format nil "~@R"))
+(println (decimal->roman 1984))
+{% endhighlight %}
+</section> 

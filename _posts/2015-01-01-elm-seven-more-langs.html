@@ -1,0 +1,363 @@
+---
+layout: default
+---
+<section>
+<h1>Seven More Languages in Seven Weeks - ELM</h1>
+<p>I was
+ given <a href="https://pragprog.com/book/7lang/seven-more-languages-in-seven-weeks">Seven
+    More Languages in Seven Weeks</a>
+  (SML) for xmas.  All of the languages are of some
+ interest, even <a href="http://www.lua.org/">Lua</a>, which doesn't feel like it really belongs.
+  I started playing with <a href="http://elixir-lang.org/">Elixir</a>
+ several months ago and have been aware of <a href="http://minikanren.org/#implementations">MiniKanren (clojure.core.logic)</a> for
+ even longer, thanks to ldnclj dojos, but have been too afraid to try
+ anything with it. <a href="http://julialang.org/">Julia</a> looks
+ like a nice alternative to <a href="http://www.r-project.org/">R</a>.
+ <a href="http://factorcode.org/">Factor</a>
+ and <a href="http://www.idris-lang.org/">Idris</a> are different from
+ the languages I already know/use. <a href="http://elm-lang.org/">Elm</a>
+ ... is not <a href="http://image.slidesharecdn.com/presentation-120504192154-phpapp02/95/machine-learning-in-javascript-50-728.jpg?cb=1336177595">JavaScript</a>.</p>
+
+<h1><strong>* WORK IN PROGRESS *</strong></h1>
+
+<h2>Elm - chapter 3</h2>
+
+<p>I don't do much JavaScript and CSS, I've always had the luxury of
+  working with <a href="http://www.icodejs.com/">amazing people</a>
+  that could do that stuff for me. When pushed I will reach for
+  something like jQuery and Stack Overflow. I guess <a href="http://qph.is.quoracdn.net/main-qimg-eb6eb210fd4116ef10fee083428ed482?convert_to_webp=true">`it`</a> has never
+  really interested me much.</p>
+
+<p>Elm has a different feel ... it has piqued my interest.   
+Influenced by multiple languages including OCaml and Haskell, it's a
+  functional programming language that compiles to JavaScript. It boasts
+  speed, brevity and maintainability.</p>
+
+<h3>The right place to start is the official Elm website, there are
+  tutorials <a href="http://elm-lang.org/learn/Syntax.elm">there</a>.</h3>
+
+<p>Timing is everything! Sadly SMR went to press with an old version.  
+  The version used in the  book is 0.13 while the current version is
+  0.14. 
+This version increment has introduced a number of changes that make following
+  along with the chapter a bit more involved, however, as someone
+  interested in running with Elm, I see this as a good thing,
+  it's going to force me to get more involved.</p>
+
+<h2>Issues so far</h2>
+
+<h3>Day 1</h3>
+
+<ul>
+  <li>
+    <strong>Something not in SML</strong>. It's taken from a tutorial
+    I
+    found <a href="http://elm-by-example.org/Chapter1HelloWorld.html">online</a>.
+    {% highlight haskell %}
+import Text
+main : Element
+main =
+    Text.toText "Hello World"
+        |> Text.color blue
+        |> Text.italic
+        |> Text.bold
+        |> Text.height 60
+        |> Text.leftAligned
+    {% endhighlight %}
+
+    this doesn't work really without a couple of quick changes:
+
+    {% highlight haskell %}
+import Text
+import Color
+import Graphics.Element (..)
+
+main : Element
+main =
+    Text.fromString "Hello World"
+        |> Text.color Color.blue
+        |> Text.height 60
+        |> Text.leftAligned
+{% endhighlight %}
+
+    this should work in the elm reactor...
+  </li>
+
+  <li><strong>Lists.</strong> Lists and associated functions don't
+  appear to be imported by default, this means 
+    {% highlight haskell %}
+    1 :: 2 :: 3 :: []
+    {% endhighlight %}
+    will yield an error rather than a list: [1,2,3]
+    Fix this using:
+    {% highlight haskell %}
+import List
+import List ((::))
+    {% endhighlight %}
+
+    <p><a href="http://package.elm-lang.org/packages/elm-lang/core/1.0.0/">It's
+    probably worth taking a look here.</a></p>
+  </li>
+
+  <li><strong>Defining Data Types.</strong> In day 1 we see that we
+  can
+  define <a href="http://en.wikipedia.org/wiki/Algebraic_data_type">algebraic
+  data types</a>. This is made possible by <i>data</i> like Haskell ... or is
+  it? Nope, <i>data</i> is now <i>type</i>. The justification for this
+  appears to be, in part, driven by the desire to make the language
+  more <a href="http://elm-lang.org/blog/announce/0.14.elm">accessible</a>,
+  which is a great goal.
+<br />
+  Old
+{% highlight haskell %}
+data Color = Black | White
+data Piece = Pawn | Knight
+data ChessPiece = CP Color Piece
+piece = CP Black Knight               
+{% endhighlight %}
+
+  New
+{% highlight haskell %}
+type Color = Black | White
+type Piece = Pawn | Knight
+type ChessPiece = CP Color Piece
+piece = CP Black Knight               
+{% endhighlight %}
+  </li>
+
+<li>
+map that sh*t. Having defined a function/lambda 
+{% highlight haskell %} 
+inc = \x -> x + 1 
+{% endhighlight %} 
+
+now apply it to a list. SML provides the following snippet:
+
+{% highlight haskell %}
+anonymousInc = \x -> x + 1
+map anonymousInc [1,2,3]
+{% endhighlight %}
+
+I found that this generated an error in the repl.
+
+<pre>
+> elm-repl
+Elm REPL 0.4 <https://github.com/elm-lang/elm-repl#elm-repl>
+Type :help for help, :exit to exit
+> inc = \x -> x + 1
+<function> : number -> number
+> map inc [1,2,3]
+
+Error in repl-temp-000.elm:
+
+Error on line 3, column 3 to 6:
+Could not find variable 'map'.
+</pre>
+
+If we import *all* of List then we can use the List.map function
+
+{% highlight haskell %}
+import List
+inc = \x -> x + 1
+List.map inc [1,2,3]
+{% endhighlight %}
+
+This import will apply to filter too.
+
+{% highlight haskell %}
+List.filter (\x -> x < 5) [1 .. 10]
+{% endhighlight %}
+
+<p><strong>While doing this I've noticed that elm-repl appears to be
+  getting in a bit of a muddle about errors. Code that appears to be
+  fine will cause the repl to choke.  I find myself having to restart
+  once I've made one error.</strong></p>
+
+<p>oh, wait, it's Scala where
+we <a href="http://stackoverflow.com/questions/8559537/where-does-the-flatmap-that-s-idiomatic-expression-in-scala-come-from">flatmap that sh*t!</a></p>
+</li>
+
+</ul>
+
+<h3>Day 2</h3>
+
+<ul>
+
+<li>
+  <p>Day 2 opens with some simple
+  Mouse work ... but <strong>lift</strong> is no more!</p>
+
+  {% highlight haskell %}
+  import Mouse
+  main = lift asText (count Mouse.position)
+  {% endhighlight %}
+
+  <p>This won't work, or it didn't for me
+  using <a href="http://elm-lang.org/try">an elm online editor.</a></p>
+
+<pre>
+Hot Swap Failed
+Error on line 3, column 8 to 12:
+Could not find variable 'lift'.</pre>
+
+  <p>Add a couple more imports and implement the count function using
+  <a href="http://package.elm-lang.org/packages/elm-lang/core/1.0.0/Signal#foldp">Signal.foldp</a></p>
+
+  {% highlight haskell %}
+import Mouse
+import Signal
+import Text
+
+mouseCount : Signal Int
+mouseCount = Signal.foldp (\position total -> total + 1) 0
+  Mouse.position
+
+main = Signal.map Text.asText mouseCount
+  {% endhighlight %}
+</li>
+
+<li>
+  It's starting to look like many of the examples require explicit use
+  of Signal ...
+
+{% highlight haskell %}
+import Mouse
+import Signal
+import Text (..) {-- saves having to write Text.asText --}
+
+clickPosition = Signal.sampleOn Mouse.clicks Mouse.position
+main = Signal.map asText clickPosition
+{% endhighlight %}
+
+<p>So, when you see lift2 we actually want map2 ... and it works the
+  same way: 'lift div onto two signals: Mouse.y and Window.height'</p>
+
+{% highlight haskell %}
+import Mouse
+import Window
+import Signal
+import Text (..)
+
+div x y = asText ((toFloat x) / (toFloat y))
+main = Signal.map2 (div) Mouse.y Window.height
+{% endhighlight %}
+</li>
+
+<li>
+  <p>The way we get data into the system has also changed,
+  Graphics.Input isn't the same as it was in 0.13. The following
+  example is given in the book:</p>
+
+  {% highlight haskell %}
+import String
+import Graphics.Input as Input 
+import Graphics.Input.Field as Field
+
+content = Input.input Field.noContent
+
+shout text = String.toUpper text
+whisper text = String.toLower text
+echo text = (shout text) ++ " " ++ (whisper text)
+
+scene fieldContent =
+  flow down
+  [ Field.field Field.defaultStyle content.handle identity
+  "Speak"fieldContent 
+  , plainText (echo fieldContent.string)
+]
+
+main = lift scene content.signal
+  {% endhighlight %}
+
+To work in 0.14 a couple of changes have to be made:
+
+  {% highlight haskell %}
+import Graphics.Element (..)
+import Graphics.Input.Field as Field
+import Signal
+import String
+import Text (plainText)
+
+content = Signal.channel Field.noContent
+
+shout text = String.toUpper text
+whisper text = String.toLower text
+echo text = (shout text) ++ " " ++ (whisper text)
+
+scene fieldContent =
+   flow down
+   [ Field.field Field.defaultStyle (Signal.send content) "Typey typey here!"
+   fieldContent
+   , plainText (echo fieldContent.string)
+   ]
+
+main =
+  Signal.map scene (Signal.subscribe content)
+
+{% endhighlight %}
+
+<p>First to go is the Input field, it doesn't appear to exist in
+  the current API, in its place we have Signal.channel -
+  see <a href="http://elm-lang.org/blog/announce/0.14.elm">here</a>.</p>
+
+<p>The next change is <strong>content.handle identity</strong> to <strong>(Signal.send
+  content)</strong>, which again is a result of the API change.</p>
+
+<p>The changes are best explained in
+  the <a href="http://package.elm-lang.org/packages/elm-lang/core/1.0.0/Signal#channel">doc</a>.
+  I guess, in short, we now pass messages (Signal.send xxx)
+  using channels, in this instant the default content of the text box
+  is <i>"Typey typey here"</i>.</p>
+
+<p>We can goof about with the way things look by replacing
+  the <strong>Field.defaultStyle</strong> with a bunch of records.</p>
+{% highlight haskell %}
+import Graphics.Element (..)
+import Graphics.Input.Field as Field
+import Signal
+import String
+import Text (plainText)
+import Color (black, green, red)
+
+content = Signal.channel Field.noContent
+
+shout text = String.toUpper text
+whisper text = String.toLower text
+echo text = (shout text) ++ " " ++ (whisper text)
+
+p = { left = 2, right = 2, top = 2, bottom = 2}
+
+s = { typeface = [ "Menlo" ]
+  , height = Just 16
+  , color = red 
+  , bold = False 
+  , italic = False
+  , line = Nothing}
+
+style = { 
+  padding = { left = 10, right = 10, top = 10, bottom = 10 }
+  , outline = { color = black, width = p, radius = 5}
+  , highlight = { color = green, width = 10}
+  , style = s
+  }
+
+
+scene fieldContent =
+   flow down
+   [ Field.field style (Signal.send content) "Typey typey here!"
+   fieldContent
+   , plainText (echo fieldContent.string)
+   ]
+
+main =
+  Signal.map scene (Signal.subscribe content)
+{% endhighlight %}
+
+</li>
+
+</ul>
+
+<p>I hope by doing this it will help me learn the language and sneak
+  it into production.</p>
+
+</section>

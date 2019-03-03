@@ -1,0 +1,218 @@
+---
+layout: default
+---
+<section>
+    <h1>Conway's Game of Life</h1>
+    <p>
+    The Game of Life is a cellular automaton devised by a British Mathematician, it requires no players and depends only on an initial seed state. Like many other games there are rules:
+    </p>
+
+    <ol>
+        <li>Any live cell with fewer than two live neighbour cells dies.</li>
+        <li>Any live cell with two or three live neighbour cells lives to the next round.</li>
+        <li>Any live cell with more than three live neighbours dies.</li>
+        <li>Any dead cell with three neighbours becomes live, this is like reproduction according to wikipedia.</li>
+    </ol>
+
+    <p>
+    There are a number of patters associated with the GOL, some are static, others are dynamic.  A couple of examples follow:
+    </p>
+
+<pre>
+------ 
+--xx--
+-x--x-    beehive/static
+--xx--
+------</pre>    
+
+<pre>
+-----
+-xx--
+-x-x-    boat/static
+--x--
+-----</pre>
+
+<pre>
+-----  -----
+--x--  -----
+--x--  -xxx-    blinker/dynamic
+--x--  -----
+-----  -----
+</pre>
+
+    <p>
+    Like the <a href="http://biomunky.wordpress.com/2014/03/22/roman-numerals-the-default-dojo-option/">Roman Numeral</a> problem, the Game of Life can frequently be found scrawled on the coding dojo whiteboard, indeed I've tried the problem before at one of the <a href="https://github.com/biomunky/ldnclj-dojo-team-5-game-of-life">London Clojure Dojos</a>.
+    </p>
+
+    <h2>Typey Typey with Scala</h2>
+
+    <p>Since the problem is generally about cells, my starting point is just that, a cell:</p>
+
+    {% highlight scala %}
+    case class Cell(x: Int, y: Int)
+    {% endhighlight %}
+
+    <p>
+    The cell is the center of our world! It contains an x:Int - the
+    row - and y: Int - the column. For every cell in our game we need
+    to be able to get its neighbours, however, before we go further,
+    it would be sensible to outline what we want to achieve.
+    <br />
+    <br />
+    Given a simple 5x5 board where the central cell [2,2] is alive:
+    </p>
+
+<pre>
+- - - - - 
+- - - - -
+- - X - -
+- - - - -
+- - - - -    
+</pre>
+
+<p>what's going on around the center cell?  We can redraw the grid and make it look like a simple list of lists ... 
+</p>
+
+<pre>
+[0,0] [0,1] [0,2] [0,3] [0,4]
+[1,0] [1,1] [1,2] [1,3] [1,4]
+[2,0] [2,1] [2,2] [2,3] [2,4]
+[3,0] [3,1] [3,2] [3,3] [3,4]
+[4,0] [4,1] [4,2] [4,3] [4,4]
+</pre>
+
+<p>If we focus in on 2,2 we have:</p>
+
+<pre>
+[1,1] [1,2] [1,3]
+[2,1] [2,2] [2,3]
+[3,1] [3,2] [3,3]    
+</pre>
+
+<p>If we look hard at this it becomes clear that there's a certain pattern in the surrounding cells
+</p>
+
+<pre>
+[-1, -1][-1,0][-1, 1]
+[ 0, -1][ 0,0][ 0, 1]
+[ 1, -1][ 1,0][ 1, 1]
+</pre>
+
+<p>We can use this to create our neighbour function - my initial version looked as follows:</p>
+
+{% highlight scala %}
+def neighbours(cell: Cell): List[Cell] = {
+    val positions = List(-1, 0, 1)
+    positions flatMap (x =>
+        positions.map (y => Cell(cell.x+x, cell.y+y))
+    ) filterNot (_ == cell )
+}
+{% endhighlight %}
+
+<p>
+The function takes the cell of interest and calculates the neighbourhood, once all the cell positions (including the 'cell' position) we filter out our input cell. So that's <strong>flatMap</strong>, <strong>map</strong> and <strong>filterNot</strong>! Too many things in one place, it's probably possible to clean that up.
+<br>
+<br>
+Yup, it is.  Rather than using the 3 functions we can use a for comprehension with a filter to only yield the cells we want.  This simplifies the previous function to:
+</p>
+
+{% highlight scala %}
+def neighbours(cell: Cell): List[Cell] = {
+    val positions = List(-1, 0, 1)
+    for (i <- positions; j <- positions; if Cell(cell.x + i, cell.y + j) != cell)
+        yield Cell(cell.x+i, cell.y+j)
+}
+{% endhighlight %}
+
+<p>If you copy that function into the repl and run it with as follows:</p>
+
+{% highlight scala %}
+neighbours(Cell(2,2))
+{% endhighlight %}
+
+<p>you will get</p>
+
+{% highlight scala %}
+List[Cell] = List(Cell(1,1), Cell(1,2), Cell(1,3), Cell(2,1), Cell(2,3), Cell(3,1), Cell(3,2), Cell(3,3))
+{% endhighlight %}
+
+<p>
+and that matches the 3x3 grid above - woo hoo.
+<br>
+<br>
+What we need to do now is work out if the cell is going to live on or die off. However, we aren't going to be dealing with one cell, but rather a collection of cells - otherwise it's going to be a very short Game of Life.
+<br>
+<br>
+To help with this problem I created another case class, that for the current purpose looks as follows:
+</p>
+
+{% highlight scala %}
+case class Grid(x: Int, y: Int, livingCells: List[Cell])
+{% endhighlight %}
+
+<p>The x and y are the size of the grid and livingCells are our seed cells - remember that we only care about the LIVING cells. So, first things first, given a cell, we need to establish it's local environment - a count of the living cells - but, we need to do it for multiple cells in one sitting. How?</p>
+
+{% highlight scala %}
+def candidates(livingCells: List[Cell]): Map[Cell, Int] = {
+    livingCells
+        .flatMap(neighbours)
+        .foldLeft(Map.empty[Cell, Int]) { (amap, acell) => amap ++ Map(acell -> (amap.getOrElse(acell, 0) + 1)) }
+}
+{% endhighlight %}
+
+<p>The first step is to calculate the neighbourhood - we use the `neighbours` function defined above.  To apply it to all cells in the living list and return a simple flattened list, we use <a href="http://stackoverflow.com/questions/8559537/where-does-the-flatmap-that-s-idiomatic-expression-in-scala-come-from">flatMap</a>.  This function returns a list of all potential cells and the number of count of living neighbours, something like:</p>
+
+{% highlight scala %}
+Map(...
+        Cell(0,3)   -> 1,
+        Cell(3,0)   -> 1,
+        Cell(1,1)   -> 4,
+        Cell(1,-1)  -> 2,
+    ...)
+{% endhighlight %}
+
+<p>The map is going to contain cells that don't exist! That kind of sucks, but it isn't the end of the world, as I stated above, we (I) need two functions here.
+<br>
+<br>
+Enter the second function: step.  Step is as follows:
+</p>
+
+{% highlight scala %}
+  def step(grid: Grid) = {
+    val newCells = candidates(grid.livingCells).filter { case (loc, living) =>
+      living == 3 || living == 2 && grid.isAlive(loc)
+    }
+    .keys
+    .toList
+    grid.copy(livingCells = newCells)
+  }
+{% endhighlight %}
+
+<p>The step function takes our grid - the list of living cells - and returns a new grid with our updated cells.  The first step is to calculate the possible candidates, it then filters the map so that we are left with only cells that have a count of 3 (living cells) or 2 living cells and where the cell is currently alive. 
+<br>
+<br>
+Since this will return a Map of cells and counts matching our criteria, we want to keep only the keys (the grid coordinates).  We can get only the living cells by calling .keys on the filtered map. This is then converted to a list and a copy of our existing grid is created - with new living cells.
+<br>
+<br>
+Where does .isAlive come from?
+<br>
+<br>
+We need to update the grid class.  Copy-pastey the following function into the Grid case class
+</p>
+
+{% highlight scala %}
+def isAlive(cell: Cell) = livingCells contains cell
+{% endhighlight %}
+
+<p>
+This function returns true if the grid.livingCells contains the passed Cell.
+<br>
+<br>
+I've quickly tested this code (only tried a 3x3 with a blinker) and pushed to <a href="https://github.com/biomunky/gameoflife">github</a> - take a look for tests and bad code :)
+<br>
+<br>
+<br>
+This post has been fuelled by Meantime Pale Ale and Brooklyn Lager.
+</p>
+
+</section>
