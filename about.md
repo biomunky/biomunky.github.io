@@ -10,7 +10,7 @@ Contract data geek, likes Python, Rust, Elixir and Clojure - not in that order. 
 
 **For Play:**
 
-Overweight bee keeper with a bike obsession and poor impulse control.
+Overweight beekeeper with a bike obsession and poor impulse control.
 
 **For Contact:**
 
