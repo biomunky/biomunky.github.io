@@ -1,18 +1,58 @@
 ---
 layout: page
 title: About
-permalink: /about/
 ---
 
-**For Work:**
+Contract Computer Programmer / Data Architect / Data Engineer
 
-Contract data geek, likes Python, Rust, Elixir and Clojure - not in that order. Has a love / hate relationship with Scala. Not smart enough to learn Haskell.
+PhD Computational and Mathematical Biology
 
-**For Play:**
+### Infrastructure
+* AWS
+* GCP
+* Terraform
 
-Overweight beekeeper with a bike obsession and poor impulse control.
+### Languages
+* Python + Flask + scikit-learn + Locust
+* Scala
+* Clojure
+* Go
+* [Rust](https://crates.io/crates/newsapi)
+* Elixir (basic)
 
-**For Contact:**
+### Big Data
+* EMR
+* Spark - Scala & Python
+* Cascalog
+* Hadoop
+* Kafka
+* Kinesis
+* Azkaban
+* Airflow
+* Redshift
+* Spanner
+* BigQuery
+* Dataflow
 
-'sitename'@gmail.com
-or see the footer for social networks
+### Tooling
+* Grafana
+* MySQL
+* Postgres
+* ELK Stack
+* Git
+
+### Editors
+* VSCode
+* Emacs + Emacs + Spacemacs
+* VIM + SpaceVim
+* JetBrains Intellij
+
+### Soft Skills
+* Pair Programming
+* Team Management
+* Team Building / Interviewing
+
+### Fun
+* Cycling MTB and Road
+* Reviewing content for a well-known technical publisher
+* Walking / Hiking
