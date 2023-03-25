@@ -22,7 +22,7 @@ title: Random & Abandonded Notes
 email: biomunky@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Things that I find interesting. 2023 and I figure I should be doing what I last did in 2015.
-baseurl: "/docs" # the subpath of your site, e.g. /blog
+baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://biomunky.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  biomunky
 
