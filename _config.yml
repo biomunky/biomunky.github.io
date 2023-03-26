@@ -18,16 +18,16 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: /dev/null
-email: biomunky@gmail.com
+title: Biomunky
 description: >-
-  Things that I find interesting. I last did this in 2015.
+  essentially /dev/null/
 baseurl: ""
 url: "https://biomunky.github.io"
 github_username:  biomunky
 
 # Build settings
 theme: minima
+
 plugins:
   - jekyll-feed
 
