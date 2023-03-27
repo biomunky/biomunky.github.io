@@ -1,0 +1,41 @@
+---
+layout: post
+title: "Pt1: On SQL"
+date: 2023-03-27
+categories: learning
+---
+
+##### `BEGIN`
+
+### SELECT * FROM languages WHERE creator ILIKE ‘%codd%’; A brief, and probably incorrect, history of SQL<sup>*</sup>.
+
+You can point the finger at IBM for a lot of things in the tech space, some good, some bad and some life altering. SQL, or the inspiration for it, is one of those things - feel free to put it in whichever bucket brings you joy.
+
+The year is approximately 1970, E.F. Codd aka Edgar Frank “Ted” Codd, has submitted a paper to Information Retrieval, Communication of the ACM. The paper lands in the hands of an editor by the name P. Baxendale, entitled ‘[A Relational Model of Data for Large Shared Data Banks](https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf)’ the abstract begins “Future users of large data banks must be protected from having to know how data is organised in the machine…”, the paper is accepted and the future of SQL begins to unfold.
+
+This is a time when data access is hidden behind the complexity of writing a computer program - not a nice fuzzy language like Python or Javascript, oh no, you had to use something with sharp edges. Codd was cognisant of this and felt the was a better way, a way that could protect users from the complexity of data models and changes to them. His idea involved describing “…data with it’s natural structure…”.
+
+To achieve this end, Codd introduced “elementary relation theory”. The following link will take you to the paper, if you’re mathematically inclined you’ll probably enjoy it and leave with a better understanding and appreciation of what we have today. If, on the other hand, you don’t derive such pleasure from mathematics it will do nothing other than reinforce your feelings.
+
+For readers in the latter category, hi mum & dad, you’ll be pleased to know you aren’t alone. Like a lot of scientific publications, the uptake for Codd’s model wasn’t as immediate as one may expect.
+
+The general feeling appeared to be that, despite protecting the user from complex data models and real programming, the approach was not perhaps as friendly as it needed to be - it makes todays windows functions look positively dreamy. In an [SRC Technical note](www.scs.stanford.edu/~dbg/readings/SRC-1997-018.pdf), Ira Traiger is recorded as stating
+
+> “Glenn Bacon … used to wonder how Ted could justify that everybody would be able to write this language that was based on mathematical predicate calculus… really, really hairy stuff”.
+
+### Enter Chamberlin & Boyce
+
+It wasn’t until Donald Chamberlin and Raymond Boyce learned of Codd’s relational model that SQL, as we know it today, began to manifest.
+
+Chamberlin and Boyce, also working for IBM, believed it was possible to design a relational language that would be accessible to users without also formally training them in mathematics or computer programming. Their initial attempt was called Square, which retained some awkward features based on the notation they adopted, but in 1973 things started to change when they joined the System R project. Upon joining the project Chamberlin and Boyce created a new language, Sequel, which they hoped “…users could learn to read … as though they were English prose”.
+
+As an aside, there’s some awesome history here, I recommend listening to an episode of the [Changelog podcast](https://changelog.com/) called [“Just Postgres”](https://changelog.com/news/just-postgres-LWm4), you can learn about [QUEL](https://en.wikipedia.org/wiki/QUEL_query_languages), [Ingres](https://en.wikipedia.org/wiki/Ingres_%28database%29) and [Postgres](https://en.wikipedia.org/wiki/PostgreSQL) got its name.
+
+Eventually, for legal reasons, Sequel would be renamed Structured Query Language (SQL). By the end of the 70s commercial offerings of SQL had begun to appear. The entity, now known as Oracle Corporation, had seen value in Codd, Chamberlin and Boyce’s work, and created one of them, continuing to fulfil their destiny as one of the most divisive tech companies in the world.
+
+Subsequently, SQL has experienced multiple cycles of popularity and decline — much like skateboards, flared trousers and neural networks!
+
+#### `END;`
+
+#### __References__
+<sup>*</sup> see [here](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6359709) for an "Early History of SQL" by Donald D. Chamberlin.
