@@ -7,23 +7,23 @@ categories: learning
 
 ##### `BEGIN`
 
-### SELECT * FROM languages WHERE creator ILIKE ‘%codd%’; A brief, and probably incorrect, history of SQL<sup>*</sup>.
-
 You can point the finger at IBM for a lot of things in the tech space, some good, some bad and some life altering. SQL, or the inspiration for it, is one of those things - feel free to put it in whichever bucket brings you joy.
 
-The year is approximately 1970, E.F. Codd aka Edgar Frank “Ted” Codd, has submitted a paper to Information Retrieval, Communication of the ACM. The paper lands in the hands of an editor by the name P. Baxendale, entitled ‘[A Relational Model of Data for Large Shared Data Banks](https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf)’ the abstract begins “Future users of large data banks must be protected from having to know how data is organised in the machine…”, the paper is accepted and the future of SQL begins to unfold.
+#### SELECT * FROM languages WHERE creator ILIKE ‘%codd%’; A brief, and probably incorrect, history of SQL<sup>*</sup>.
+
+The year is approximately 1970, E.F. Codd aka Edgar Frank “Ted” Codd, has submitted a paper to Information Retrieval, Communication of the ACM. The paper lands in the hands of an editor by the name P. Baxendale, entitled ‘[A Relational Model of Data for Large Shared Data Banks](https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf)’. The abstract begins with “Future users of large data banks must be protected from having to know how data is organised in the machine…”, the paper is accepted and the future of SQL begins to unfold.
 
 This is a time when data access is hidden behind the complexity of writing a computer program - not a nice fuzzy language like Python or Javascript, oh no, you had to use something with sharp edges. Codd was cognisant of this and felt the was a better way, a way that could protect users from the complexity of data models and changes to them. His idea involved describing “…data with it’s natural structure…”.
 
-To achieve this end, Codd introduced “elementary relation theory”. The following link will take you to the paper, if you’re mathematically inclined you’ll probably enjoy it and leave with a better understanding and appreciation of what we have today. If, on the other hand, you don’t derive such pleasure from mathematics it will do nothing other than reinforce your feelings.
+To achieve this end, Codd leverage his skills in mathematics and applied “elementary relation theory” to the problem. The following link will take you to the paper, if you’re mathematically inclined you’ll probably enjoy it and leave with a better understanding and appreciation of what we have today. If, on the other hand, you don’t derive such pleasure from mathematics it will do nothing other than reinforce your feelings.
 
 For readers in the latter category, hi mum & dad, you’ll be pleased to know you aren’t alone. Like a lot of scientific publications, the uptake for Codd’s model wasn’t as immediate as one may expect.
 
-The general feeling appeared to be that, despite protecting the user from complex data models and real programming, the approach was not perhaps as friendly as it needed to be - it makes todays windows functions look positively dreamy. In an [SRC Technical note](www.scs.stanford.edu/~dbg/readings/SRC-1997-018.pdf), Ira Traiger is recorded as stating
+The general feeling appeared to be that, despite protecting the user from complex data models and _real_ programming, the approach was not perhaps as friendly as it needed to be - it makes todays windows functions look positively dreamy. In an [SRC Technical note](www.scs.stanford.edu/~dbg/readings/SRC-1997-018.pdf), Ira Traiger is recorded as stating
 
 > “Glenn Bacon … used to wonder how Ted could justify that everybody would be able to write this language that was based on mathematical predicate calculus… really, really hairy stuff”.
 
-### Enter Chamberlin & Boyce
+#### Enter Chamberlin & Boyce
 
 It wasn’t until Donald Chamberlin and Raymond Boyce learned of Codd’s relational model that SQL, as we know it today, began to manifest.
 
