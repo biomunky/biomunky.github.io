@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Pt1: On SQL"
+title: "Part 1: SQL, a short and incorrect history"
 date: 2023-03-27
-categories: learning
+categories: sql
 ---
 
 ##### `BEGIN`
