@@ -1,15 +1,13 @@
 ---
 layout: post
 title: "Part 2: No Love for SQL"
-date: 2023-03-27
+date: 2023-03-30
 categories: sql
 ---
 
-Pt2: No Love for SQL
+Why do folks not like SQL? Regardless of domain developers appear allergic to the  idea of writing SQL - there’s zero enthusiasm.
 
-Why do folks not like SQL? Almost regardless of domain. When talking to developers and the prospect of writing SQL comes up the temperature of the room drops, there’s almost zero enthusiasm.
-
-But this can be topped. Simply ask someone to maintain SQL that a current/former colleague/lover wrote. I’ve only ever seen similar reactions when someone is asked to maintain Perl that the psycho down the hall wrote! The horror and revulsion, tears and tantrums - why me, have I done something to hurt you?
+This lack of excitement can be topped - simply ask someone to maintain SQL that a current/former colleague/lover wrote. The only similar reponse I’ve seen is when asking to maintain some Perl code that the psycho down the hall wrote! Horror. Revulsion. Tears and tantrums. Why me? Have I done something to hurt you?
 
 > fwiw I wrote Perl and SQL for a chunk of my life. I regret nothing, but I do resent you Dave
 
@@ -47,4 +45,4 @@ That said, CTEs aren’t a silver bullet.  They’re still just queries, as such
 
 __BUT__ the biggest win for me is that they paved the way for [dbt](https://docs.getdbt.com/docs/introduction), and if you aren’t using dbt for your database transformations you are missing out. I am going to do a series of posts and intro videos on using dbt, from simple models, removing duplications with macros and testing.
 
-Will this said and despite the availability of great tools like [duckdb](https://duckdb.org/) and [Litestream](https://litestream.io/), it's unlikely that SQL will suddenly become everyone's favourite language. However, with these powerful tools at your disposal, you should definitely consider diving into SQL and pushing through any difficulties. Who knows, you might even end up loving it!
+With this said, and despite the availability of great tools like [duckdb](https://duckdb.org/) and [Litestream](https://litestream.io/), it's unlikely that SQL will suddenly become everyone's favourite language. However, with these powerful tools at your disposal, you should definitely consider diving into SQL and pushing through any difficulties. Who knows, you might even end up loving it!
