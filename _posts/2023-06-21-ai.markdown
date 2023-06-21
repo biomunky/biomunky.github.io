@@ -1,0 +1,76 @@
+---
+layout: post
+title: "AI to ML and Back Again"
+date: 2023-06-21
+categories: ai
+---
+
+# AI to ML and Back Again
+
+Today, AI is everywhere. The press is full of colourful stories about it [eating jobs](https://www.key4biz.it/wp-content/uploads/2023/03/Global-Economics-Analyst_-The-Potentially-Large-Effects-of-Artificial-Intelligence-on-Economic-Growth-Briggs_Kodnani.pdf) to [killing operators](https://www.bbc.co.uk/news/technology-65789916) and [denials](https://www.bbc.co.uk/news/technology-65789916). This is not the first time society has [panicked over AI](https://newsletter.pessimistsarchive.org/p/the-original-ai-doomer-dr-norbert) (via [a16z](https://a16z.com/2023/06/06/ai-will-save-the-world/)).
+
+If we can skip the histrionics, AI has the potential to transform [teaching](https://www.youtube.com/watch?v=hJP5GqnTrNo) rather than destroy it. The concept of providing children with their very own AI assistants, like something out of The Diamond Age by Neal Stephenson could potentially close some of the gaps in our education systems -I struggle with the UKs pathetic take on private education, which does nothing but fuel social divides, ensuring that us filthy proles are kept in our place.
+
+What works in education will work elsewhere – an [AI assistant,  coach, collaborator or advisor](https://a16z.com/2023/06/06/ai-will-save-the-world/). We are already seeing generative AI in science, enabling the [generation of novel protein sequences](https://phys.org/news/2023-05-generative-ai-proteins.html), which in turn helps with drug development, potentially making medication cheaper and more accessible. It also continues to pave the way for personalised medicine - giving us a new hope in the battle with diseases like cancer.
+The Silver Bullet: Machine Learning
+I’m old enough to remember machine learning (ML) coming into fashion, not for the first time because I’m not THAT old, but recently enough that much of the tooling we have today didn’t exist.
+
+My PhD involved ML. I read books and papers, I used tools that other folks created but I also had to write my own - partly for learning purposes but also because I needed to solve my own specific problems.
+
+As I moved from academia to industry, I straddled data and ML, eventually moving more towards enabling data science than doing it myself. I watched on as ML ascended from niche tool to the silver bullet for problems the tech industry faced.
+
+Are your systems behaving badly? Don’t worry, ML can solve that, all you need is to build an anomaly detector. Is landing new customers slow and painful? We can use ML to identify which folks are more likely to convert. Are there lots of people who drop out of the onboarding process? Don’t worry, we can solve that with a ‘next best x’ model. Want to cross-sell to your customers on a new service for streamed media? ML can help!
+
+For all these scenarios and more, ML was going to be there for you, helping you deliver value to your business and customers.  As long as you had ML, it didn’t matter what the problem was - the silver bullet was chambered, all you had to do was pull the trigger.
+
+As more tooling came along, the barrier to entry became lower. Services like DataRobot, AWS Sagemaker and, much later, Google Vertex AI arrived. These tools would help you build models and get them into production.
+
+Eventually things became so easy that all a data scientist had to do was [follow some simple steps](https://medium.com/startup-frontier/answering-the-much-hyped-phase-2-of-south-park-underpants-gnomes-profit-plan-ca1ba030f3e5):
+
+1. Get a data set
+2. Call model.fit()
+3. ???
+4. PROFIT
+
+Of course, this is facetious. Having something that “works on my machine” is very different to production. Ensuring that models don’t drift and aren’t biassed is hard and time consuming — having a fallback mechanism if things [go off the rails](https://towardsdatascience.com/zillow-collapse-proves-ai-is-not-perfect-let-me-explain-3bdeb03b7713), which they do, is essential. That’s even assuming your teams can get access to all the data they need to build the models in the first place.
+
+This is why around 90% of models don’t make it to production, and even when they do the job isn’t complete, you’re probably going to need to handle scaling across different business functions and ensuring that whatever processes and frameworks you used can be leveraged across different industries, especially if you work in consulting.
+Where does AI fit in?
+Over time we stopped using the term ML, favouring AI/ML instead. Before long ML was dropped completely, the umbrella term “AI” was correctly being used (mostly). It just so happens that AI is much more marketable than ML, but it also serves to broaden the scope of the kinds of conversations that people were willing to have, which meant the kind of problems we could address also grew, which was nice.
+
+Today however, it seems that we are experiencing a regression and the conversation space is shrinking. Now when people say “AI” they mean Generative AI, particularly Large Language Models (LLMs)… something… something… iPhone moment. Let me clarify, I do not intend to disregard the accomplishments that are Midjourney, DALL-E or Whisper etc, nor do I mean to imply that these tools lack substance or the potential to deliver substantial business value.
+
+Nevertheless, it would not be an overstatement to say that opinions are divided regarding the short and long-term benefits of any flavour of AI. I will admit that I find it fascinating, watching folks in my scientific network becoming perplexed when ChatGPT generates references to non-existent papers; it’s not limited to them either, the [lawyers are getting involved](https://apnews.com/article/artificial-intelligence-chatgpt-courts-e15023d7e6fdf4f099aa122437dbb59b).
+
+But what does this really mean for folks in the world of software? Specifically, are junior engineers + AI currently enough to make senior engineers surplus to requirements? Will AI replace half of your team?
+Farewell, VSCode!
+On developer tooling, things are interesting. My immediate response to most of these kinds of questions is “No, but they’re pretty good for bootstrapping.”
+
+Tools like Microsoft CoPilot, CodeWhisperer or Ghostwriter are exciting, generating a bunch of code with a natural language prompt is a great way to kick off a new hacking session, but many of the conversations I have, with coworkers and friends, is that the code is often wrong, incomplete or missing something. This means a bunch of time is spent tweaking either prompts or outputs to meet expectations and you have to review EVERYTHING.
+
+Here’s another anecdata point:
+
+In a [recent blog post](https://simonwillison.net/2023/Apr/12/code-interpreter/), the developer of a product called [Datasette](https://datasette.io/) demonstrated the power of ChatGPT code interpreter to benchmark some code. He, [Simon Willison](https://simonw.substack.com/), managed to achieve his goals — all within 5 minutes.
+
+There are a couple of things to call out. First is that this was part of a series about using ChatGPT to get things done — at this point in the series he already knows how to use the tools to get the outcome he wants. Second is that he’s an experienced developer — he created Datasette but also co-created [Django](https://www.djangoproject.com/), one of the mainstays of Python web dev.
+
+You can probably guess where I’m going with this.
+
+    After publishing this post, I realized that I’d missed a mistake ChatGPT had made.
+
+    I wanted to compare the time taken to execute PRAGMA schema_version v.s. calculating  the MD5 hash of select group_concat(sql) from sqlite_master. But... ChatGPT had started the timer with start_time = time.time() before creating the tables — so the time measurement included the table creation time.
+
+    This didn’t affect the comparison between the two, but it did mean that I wasn’t getting the underlying numbers that I most cared about.
+
+    Like I said earlier, You have to closely review EVERYTHING they do. I’m embarrassed I missed this!
+
+The emphasis in the quote is his, not mine.
+
+If experienced folks can be tripped up by stuff like I described above then I’m less inclined to believe the junior engineer + AI equals senior engineer equation balances.
+
+I’m actually more comfortable with the idea that the gap between experienced and less experienced engineers is going to grow because of these tools. Of course I have no concrete evidence to back up my hypothesis.
+
+It feels like that’s the direction of travel - folks in interview loops aren’t going to be allowed to use these tools, or I assume that’s going to be the case, if so, the barrier to entry may have just got higher.
+
+Regardless, it’s foolish to ignore the productivity gains these tools yield — you just have to review everything they do, as you should be doing for all your pull requests. Trust, but verify.
+
