@@ -16,6 +16,8 @@ The Silver Bullet: Machine Learning
 
 I’m old enough to remember machine learning (ML) coming into fashion, not for the first time because I’m not THAT old, but recently enough that much of the tooling we have today didn’t exist.
 
+## My Ego
+
 My PhD involved ML. I read books and papers, I used tools that other folks created but I also had to write my own - partly for learning purposes but also because I needed to solve my own specific problems.
 
 As I moved from academia to industry, I straddled data and ML, eventually moving more towards enabling data science than doing it myself. I watched on as ML ascended from niche tool to the silver bullet for problems the tech industry faced.
@@ -36,7 +38,8 @@ Eventually things became so easy that all a data scientist had to do was [follow
 Of course, this is facetious. Having something that “works on my machine” is very different to production. Ensuring that models don’t drift and aren’t biassed is hard and time consuming — having a fallback mechanism if things [go off the rails](https://towardsdatascience.com/zillow-collapse-proves-ai-is-not-perfect-let-me-explain-3bdeb03b7713), which they do, is essential. That’s even assuming your teams can get access to all the data they need to build the models in the first place.
 
 This is why around 90% of models don’t make it to production, and even when they do the job isn’t complete, you’re probably going to need to handle scaling across different business functions and ensuring that whatever processes and frameworks you used can be leveraged across different industries, especially if you work in consulting.
-Where does AI fit in?
+
+## Where does AI fit in?
 
 Over time we stopped using the term ML, favouring AI/ML instead. Before long ML was dropped completely, the umbrella term “AI” was correctly being used (mostly). It just so happens that AI is much more marketable than ML, but it also serves to broaden the scope of the kinds of conversations that people were willing to have, which meant the kind of problems we could address also grew, which was nice.
 
@@ -60,15 +63,13 @@ There are a couple of things to call out. First is that this was part of a serie
 
 You can probably guess where I’m going with this.
 
-```text
-After publishing this post, I realized that I’d missed a mistake ChatGPT had made.
+    After publishing this post, I realized that I’d missed a mistake ChatGPT had made.
 
-I wanted to compare the time taken to execute PRAGMA schema_version v.s. calculating  the MD5 hash of select group_concat(sql) from sqlite_master. But... ChatGPT had started the timer with start_time = time.time() before creating the tables — so the time measurement included the table creation time.
+    I wanted to compare the time taken to execute PRAGMA schema_version v.s. calculating  the MD5 hash of select group_concat(sql) from sqlite_master. But... ChatGPT had started the timer with start_time = time.time() before creating the tables — so the time measurement included the table creation time.
 
-This didn’t affect the comparison between the two, but it did mean that I wasn’t getting the underlying numbers that I most cared about.
+    This didn’t affect the comparison between the two, but it did mean that I wasn’t getting the underlying numbers that I most cared about.
 
-Like I said earlier, You have to closely review EVERYTHING they do. I’m embarrassed I missed this!
-```
+    Like I said earlier, You have to closely review EVERYTHING they do. I’m embarrassed I missed this!
 
 The emphasis in the quote is his, not mine.
 
