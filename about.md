@@ -4,12 +4,26 @@ title: "Who am i?"
 permalink: /me/
 ---
 
-For years I've used the handle biomunky, a name based on the combination of my fascination, at the time, with biology and an old clothing brand I liked - drunknmunky. Today neither exist. Note: there are other folks out there using the same handle - some of them are strange people.
+### what's in a name?
 
-Over the last 15+ years I've been working around the data space.
+I've used the handle biomunky for years (20+). It's a name based on a combination of my fascination with biology and an old clothing brand I liked when I was a child - drunknmunky.
 
-My MSc and PhD involved biology, stats and ML. Subsequently, I've worked in media, video games, government and finance building data platforms and products.
+Today I don't do much biology and I'm fairly sure the clothing brand doesn't exist. 
 
-I've had roles as a software engineer, data engineer, ML engineer and Data Architect. I've worked as an IC, team lead and within cross-functional teams.
+> Note: there are other folks out there using the same handle - some of them are strange people.
 
-I'm currently the Data & Analytics Practice Lead / Head of Data & Analytics Engineering at a boutique Software Delivery Company.
+### what have I done?
+
+It feels like I've been working in the data space for a very long time.
+
+My academic past covered biology, stats, programming and ML. Since then, I've worked in social media, video games, government and finance. I have helped build data platforms and products as well as build novel machine learning models and deploying them to production.
+
+I've had roles as a software engineer, data engineer, ML engineer and Data Architect. I've worked as an IC, team lead and within cross-functional teams and most recently as the Head of Data and Analytics at a consultancy firm.
+
+### what am I doing now?
+
+I'm have recently returned to finance, working fulltime on deploying Generative AI as a core service.
+
+### what do I like?
+
+I'm really enjoying GenAI at the moment, seeing how it can help 'get things done'. In terms of programming, I like Python, Rust and Elixir but also mess about with Ocaml and various Lisps.
